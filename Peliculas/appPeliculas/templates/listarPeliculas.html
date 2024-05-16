@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static%}
+    <script src="{% static '../static/Js/app.js '%}"></script>
+    <title>Document</title>
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css">
+
+    <link rel="stylesheet" href="../static/Style/ListarPeliculas.css">
+    <link rel="stylesheet" href="../static/Style/ddd.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css">
+</head>
+<body>
+  <div class=" d-flex flex-column gap-3 w-100 justify-content-center align-items-center">
+    <div class="head d-flex gap-4 justify-content-center align-items-center"> 
+        <h2>Tienda de peliculas</h2>
+        <img src="../static/Icons/movies-podcast.png" alt="">
+    </div>
+    <header>
+        <nav class="d-flex gap-4">
+            <button><a href="/vistaAgregarPelicula/">Agregar Peliculas</a></button>
+            <button><a href="/vistaAgregargenero/">Agregar Generos</a></button>
+        </nav>
+    </header>
+    <div class=" col-12 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
+        <h2>Peliculas</h2>
+        <div>
+            <table id="tblProductos" class="table">
+                <thead class="table-dark">
+                  <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Protagonista</th>
+                    <th scope="col">Duracion</th>
+                    <th scope="col">Sinopsis</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col">Genero</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for p in movies %}
+                  <tr>
+                    <td>{{p.pel_codigo}}</td>
+                    <td>{{p.pel_titulo}}</td>
+                    <td>{{p.pel_protagonista}}</td>
+                    <td>{{p.pel_duracion}}</td>
+                    <td>{{p.pel_sinopsis}}</td>
+                    <td><img src="/media/{{p.pel_foto}}" alt="" width="100" height="100"></td>
+                    <td>{{p.pel_genero.gen_nombre}}</td>
+                    <td>
+                      <div class="d-flex gap-3 justify-content-center align-items-center">
+                        <a href="/consultarPelicula/{{p.pk}}" class="btn btn-primary"><ion-icon name="create-outline"></ion-icon></a>
+                        <button onclick="eliminarPelicula('{{p.pk}}')" class="btn btn-danger"><ion-icon name="trash-outline"></ion-icon></button>
+                        
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <script>
+        new DataTable('#tblProductos', {
+            layout: {
+                topStart: {
+                    buttons: ['excel', 'pdf', 'print']
+                }
+            }
+        });
+    </script>
+    <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+  ></script>
+</body>
+</html>
