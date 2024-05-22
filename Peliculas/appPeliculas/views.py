@@ -131,3 +131,13 @@ def eliminarPelicula(request, id):
         mensaje = str(error)
     retorno={"mensaje":mensaje}
     return redirect ("/")
+
+
+def registroSolicitud(request):
+    user = request.user
+    descripcion = request.POST['txt']
+    
+    consecutivoCaso = randint(1, 100)
+    codigoCaso = "REQ" + str(consecutivoCaso).rjust(5,'0')
+    userCaso = User.objects.filter()
+    
